@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Akta №30 · Wydział Muzyczny</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Crimson+Text:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/red.css">
+</head>
+<body class="red-page">
+  <main>
+    <section class="red-board" id="board">
+      <span class="washi-tape tl" aria-hidden="true"></span>
+      <span class="washi-tape br" aria-hidden="true"></span>
+
+      <h1 class="red-title">JAKA TO BAJKA?</h1>
+      <p class="red-subtitle">Posłuchajcie i zgadnijcie tytuł.</p>
+
+      <p class="counter" id="counter">Piosenka <strong id="cur">—</strong> / <strong id="total">—</strong></p>
+
+      <button class="play-btn" id="playBtn" type="button" aria-label="Odtwórz piosenkę">
+        <svg viewBox="0 0 24 24" id="playIcon" aria-hidden="true"><polygon points="6,4 20,12 6,20"/></svg>
+      </button>
+
+      <form class="answer-row" id="answerForm" autocomplete="off">
+        <input
+          class="answer-input"
+          id="answerInput"
+          type="text"
+          placeholder="Wpiszcie tytuł bajki…"
+          autocomplete="off"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck="false"
+          inputmode="text"
+          aria-label="Tytuł bajki"
+        >
+        <button type="submit" class="check-btn">Sprawdź</button>
+      </form>
+
+      <div class="feedback" id="feedback" aria-live="polite"></div>
+
+      <p class="empty-state" id="emptyState">Brak piosenek do odtworzenia. Skontaktujcie się z autorem zagadki.</p>
+
+      <audio id="player" preload="auto" playsinline></audio>
+    </section>
+
+    <section class="reveal" id="reveal" aria-live="polite">
+      <h2 class="reveal-title">GRATULACJE!</h2>
+      <p class="reveal-sub">Wasza cyfra to…</p>
+      <div class="reveal-cipher">8</div>
+      <p class="reveal-sub">Zapamiętajcie i czekajcie na pozostałe grupy.</p>
+    </section>
+  </main>
+  <script src="/js/red.js"></script>
+</body>
+</html>

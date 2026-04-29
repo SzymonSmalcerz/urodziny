@@ -1,0 +1,125 @@
+body.alfa-page {
+  background: linear-gradient(135deg, #2d0a4a 0%, #5b1a8a 50%, #2d0a4a 100%);
+  background-image:
+    linear-gradient(135deg, #2d0a4a 0%, #5b1a8a 50%, #2d0a4a 100%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-blend-mode: normal, overlay;
+  color: var(--noir-paper);
+}
+
+body.alfa-page::before {
+  background: radial-gradient(ellipse at center, transparent 35%, rgba(0, 0, 0, 0.5) 100%);
+}
+
+.alfa-board {
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  padding: 2rem 1.25rem;
+  position: relative;
+  z-index: 2;
+}
+
+.alfa-input {
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: clamp(2rem, 8vw, 4rem);
+  text-align: center;
+  letter-spacing: 0.4em;
+  color: #fff;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.55);
+  padding: 1rem 0.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+  caret-color: var(--noir-gold);
+}
+
+.alfa-input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+  letter-spacing: 0.4em;
+}
+
+.alfa-input:focus {
+  border-color: var(--noir-gold);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.alfa-input::-webkit-outer-spin-button,
+.alfa-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.alfa-input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.alfa-check-btn {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  padding: 1rem 2.25rem;
+  background: rgba(255, 255, 255, 0.95);
+  color: #2d0a4a;
+  border: 2px solid #fff;
+  font-weight: bold;
+  transition: background 0.15s ease, transform 0.15s ease;
+  width: 100%;
+  max-width: 280px;
+}
+
+.alfa-check-btn:hover,
+.alfa-check-btn:active {
+  background: var(--noir-gold);
+  border-color: var(--noir-gold);
+  transform: scale(1.02);
+}
+
+.alfa-feedback {
+  min-height: 1.5rem;
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  color: #ffb3b3;
+}
+
+.alfa-reveal {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+
+.alfa-reveal.active {
+  display: flex;
+  animation: reveal-pop 0.9s ease-out;
+}
+
+.alfa-reveal-title {
+  font-family: var(--font-mono);
+  font-size: clamp(1.2rem, 4vw, 1.75rem);
+  letter-spacing: 0.18em;
+  margin-bottom: 1rem;
+  color: #fff;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
+}
+
+.alfa-reveal-cipher {
+  font-size: clamp(8rem, 25vw, 18rem);
+  font-family: var(--font-mono);
+  color: var(--noir-gold);
+  text-shadow: 0 0 50px rgba(201, 169, 97, 0.55), 0 6px 0 rgba(0, 0, 0, 0.4);
+  line-height: 1;
+  font-weight: bold;
+}
+
+.shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+.hidden {
+  display: none !important;
+}

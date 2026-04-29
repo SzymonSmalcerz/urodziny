@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Akta №30 · Wydział Kolorów</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Crimson+Text&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/global.css">
+  <link rel="stylesheet" href="/css/alfa.css">
+</head>
+<body class="alfa-page">
+  <main>
+    <section class="alfa-board" id="alfaBoard">
+      <form id="alfaForm" autocomplete="off">
+        <input
+          class="alfa-input"
+          id="alfaInput"
+          type="number"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          min="0"
+          max="9999"
+          maxlength="4"
+          placeholder="— — — —"
+          aria-label="Czterocyfrowa waga"
+        >
+        <button type="submit" class="alfa-check-btn">Sprawdź</button>
+        <div class="alfa-feedback" id="alfaFeedback" aria-live="polite"></div>
+      </form>
+
+      <section class="alfa-reveal" id="alfaReveal" aria-live="polite">
+        <h2 class="alfa-reveal-title">WASZA CYFRA TO…</h2>
+        <div class="alfa-reveal-cipher">5</div>
+      </section>
+    </section>
+  </main>
+  <script src="/js/alfa.js"></script>
+</body>
+</html>
