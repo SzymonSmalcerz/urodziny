@@ -1,14 +1,8 @@
 (function () {
-  const STORAGE_KEY = 'alfa_solved';
   const form = document.getElementById('alfaForm');
   const input = document.getElementById('alfaInput');
   const feedback = document.getElementById('alfaFeedback');
   const reveal = document.getElementById('alfaReveal');
-
-  if (localStorage.getItem(STORAGE_KEY) === '1') {
-    form.classList.add('hidden');
-    reveal.classList.add('active');
-  }
 
   function shake(el) {
     el.classList.remove('shake');
@@ -32,11 +26,17 @@
       return;
     }
     if (val >= 205 && val <= 225) {
-      localStorage.setItem(STORAGE_KEY, '1');
       form.classList.add('hidden');
       reveal.classList.add('active');
+      fetch('/api/cipher?group=alfa')
+        .then((r) => r.json())
+        .then((d) => {
+          const el = document.getElementById('alfaCipher');
+          if (el && d && d.digit) el.textContent = d.digit;
+        })
+        .catch(() => {});
     } else {
-      feedback.textContent = 'Zła waga, spróbujcie ponownie.';
+      feedback.textContent = 'Zły kod, spróbujcie ponownie.';
       shake(input);
       setTimeout(() => { input.value = ''; input.focus(); }, 600);
     }

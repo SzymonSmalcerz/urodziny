@@ -25,6 +25,38 @@ app.get('/green', sendView('green.html'));
 app.get('/red', sendView('red.html'));
 app.get('/blue', sendView('blue.html'));
 app.get('/alfa', sendView('alfa.html'));
+app.get('/aW52b2tlTWUoKQ==', (req, res) => res.redirect(302, '/base64'));
+app.get('/base64', sendView('cipher.html'));
+
+const CIPHERS = {
+  red:   { digit: '0' },
+  green: { digit: '9', message: 'cyfra: 9. Zadania: w dwóch sprawach waga jest rozwiązaniem' },
+  blue:  { digit: '6' },
+  alfa:  { digit: '1' },
+};
+
+app.get('/api/cipher', (req, res) => {
+  const group = req.query.group;
+  if (!group || !CIPHERS[group]) {
+    return res.status(400).json({ error: 'unknown_group' });
+  }
+  res.json(CIPHERS[group]);
+});
+
+app.get('/api/answer', (req, res) => {
+  const song = req.query.song;
+  if (!song || typeof song !== 'string') {
+    return res.status(400).json({ error: 'missing_song_param' });
+  }
+  if (song.includes('/') || song.includes('\\') || song.includes('..')) {
+    return res.status(400).json({ error: 'invalid_song_param' });
+  }
+  const filePath = path.join(AUDIO_DIR, `${song}.mp3`);
+  fs.access(filePath, fs.constants.R_OK, (err) => {
+    if (err) return res.status(404).json({ error: 'song_not_found', song });
+    res.json({ correct: song });
+  });
+});
 
 app.get('/api/songs', (req, res) => {
   fs.readdir(AUDIO_DIR, (err, files) => {

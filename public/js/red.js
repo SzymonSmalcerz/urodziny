@@ -1,8 +1,6 @@
 (function () {
   const PLAY_SVG = '<polygon points="6,4 20,12 6,20"/>';
   const PAUSE_SVG = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></g>';
-  const STORAGE_KEY = 'red_progress_v1';
-
   const board = document.getElementById('board');
   const reveal = document.getElementById('reveal');
   const playBtn = document.getElementById('playBtn');
@@ -24,26 +22,6 @@
       .normalize('NFD')
       .replace(/[̀-ͯ]/g, '')
       .replace(/[^a-z0-9]/g, '');
-  }
-
-  function loadProgress() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return null;
-      return JSON.parse(raw);
-    } catch (_) {
-      return null;
-    }
-  }
-
-  function saveProgress() {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({
-        index: currentIndex,
-        order: songs,
-        solved: currentIndex >= songs.length,
-      }));
-    } catch (_) {}
   }
 
   function setPlayIcon(playing) {
@@ -70,6 +48,13 @@
   function showReveal() {
     board.style.display = 'none';
     reveal.classList.add('active');
+    fetch('/api/cipher?group=red')
+      .then((r) => r.json())
+      .then((d) => {
+        const el = document.getElementById('redCipher');
+        if (el && d && d.digit) el.textContent = d.digit;
+      })
+      .catch(() => {});
   }
 
   function showFeedback(text, kind) {
@@ -117,7 +102,6 @@
       setPlayIcon(false);
       input.value = '';
       currentIndex++;
-      saveProgress();
       setTimeout(() => {
         showFeedback('', null);
         if (currentIndex >= songs.length) {
@@ -133,6 +117,31 @@
     }
   });
 
+  window.getCorrect = function () {
+    if (!songs.length) {
+      console.log('Lista piosenek jeszcze się nie załadowała.');
+      return;
+    }
+    if (currentIndex >= songs.length) {
+      console.log('Wszystkie piosenki zgadnięte.');
+      return;
+    }
+    const song = songs[currentIndex];
+    return fetch('/api/answer?song=' + encodeURIComponent(song))
+      .then((r) => r.json())
+      .then((data) => {
+        if (data && data.correct) {
+          console.log('Poprawna odpowiedź:', data.correct);
+        } else {
+          console.warn('Backend nie potwierdził odpowiedzi:', data);
+        }
+        return data;
+      })
+      .catch((err) => {
+        console.error('Błąd zapytania do backendu:', err);
+      });
+  };
+
   fetch('/api/songs')
     .then((r) => r.json())
     .then((data) => {
@@ -143,28 +152,10 @@
         return;
       }
 
-      const saved = loadProgress();
-      if (saved && Array.isArray(saved.order) && saved.order.length === fetched.length) {
-        const sameSet = saved.order.every((s) => fetched.includes(s));
-        if (sameSet) {
-          songs = saved.order;
-          currentIndex = saved.solved ? songs.length : Math.min(saved.index || 0, songs.length);
-        } else {
-          songs = fetched;
-          currentIndex = 0;
-        }
-      } else {
-        songs = fetched;
-        currentIndex = 0;
-      }
-
+      songs = fetched;
+      currentIndex = 0;
       counterTotal.textContent = String(songs.length);
-
-      if (currentIndex >= songs.length) {
-        showReveal();
-      } else {
-        loadCurrentSong();
-      }
+      loadCurrentSong();
     })
     .catch(() => {
       emptyState.textContent = 'Błąd ładowania listy bajek. Odświeżcie stronę.';

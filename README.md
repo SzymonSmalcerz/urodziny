@@ -4,14 +4,14 @@ Mała detektywistyczna gra na 4 grupy. Każda grupa ma osobną podstronę i mini
 
 ## Kod kłódki
 
-`6 - 8 - 8 - 5` (kolejność: zielony · czerwony · niebieski · alfa = R G B + alfa)
+`0 - 9 - 6 - 1` (kolejność: czerwony · zielony · niebieski · alfa = R G B + alfa, podpowiedź w tytułach podstron)
 
 | Grupa | URL | Zadanie | Cyfra |
 |---|---|---|---|
-| Zielona (informatyczna) | `/green` | otwórz DevTools, znajdź ukryty span z base64 `Y2FsbE1lKCk=`, zdekoduj → wpisz `callMe()` w konsoli | **6** (z hintem `%10` dla niebieskich) |
-| Czerwona (muzyczna) | `/red` | zgadnij tytuły wszystkich bajek po fragmencie muzyki | **8** |
-| Niebieska (łamigłówkowa) | `/blue` | zważ kółko fizycznie, wpisz wagę w gramach (1450–1550) | **8** |
-| Kolorowa (alfa) | `/alfa` | zsumuj wagi czerwonego + niebieskiego przedmiotu (3850–4000) | **5** |
+| Czerwona (muzyczna) | `/red` | zgadnij tytuły wszystkich bajek po fragmencie muzyki | **0** |
+| Zielona (informatyczna) | `/green` | otwórz DevTools, znajdź ukryty span z base64 `aW52b2tlTWUoKQ==`, zdekoduj → wpisz `invokeMe()` w konsoli | **9** |
+| Niebieska (łamigłówkowa) | `/blue` | zważ kółko fizycznie (~420 g), wpisz wagę w gramach (408–432) | **6** |
+| Kolorowa (alfa) | `/alfa` | zsumuj wagi czerwonego + niebieskiego przedmiotu (~215 g, akceptujemy 205–225) | **1** |
 
 ## Uruchomienie lokalne
 
@@ -81,9 +81,10 @@ kasia_urodziny/
 ## Strategia gry (dla autora)
 
 - Grupy siedzą razem, ale każda widzi tylko swoją podstronę.
-- **Zielona** dostaje `%10` — to podpowiedź dla **niebieskiej**, że ich cyfra to `waga_kółka mod 10` (1480 g → 8).
-- Niebieska rozplątuje fizyczne kółko, waży, wpisuje wagę online → dostaje cyfrę 8 (wbudowany margines błędu wagi 1450–1550).
-- **Kolorowa** sumuje fizyczne wagi przedmiotów (czerwony + niebieski) — suma w przedziale 3850–4000.
-- Łączny kod **6885** otwiera fizyczną kłódkę.
+- **Zielona** dostaje hint „w dwóch sprawach waga jest rozwiązaniem" — mówi niebieskiej i kolorowej, że ich zadania polegają na ważeniu.
+- **Niebieska** rozplątuje fizyczne kółko, waży, wpisuje wagę online → dostaje cyfrę 6 (akceptowany margines 408–432 g).
+- **Kolorowa** sumuje fizyczne wagi przedmiotów (~215 g) → dostaje cyfrę 1 (akceptowany margines 205–225 g) i wskazówkę o kolejności.
+- Kolejność cyfr w kłódce ukryta w tytułach podstron (HTML `<title>`): `red`, `green`, `blue`, `alfa` → R-G-B-A.
+- Łączny kod **0961** otwiera fizyczną kłódkę.
 
 Powodzenia! 🕵️

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Akta №30 · Wydział Kolorów</title>
+  <title>alfa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Crimson+Text&display=swap" rel="stylesheet">
@@ -11,6 +11,83 @@
   <link rel="stylesheet" href="/css/alfa.css">
 </head>
 <body class="alfa-page">
+  <div class="bierki" aria-hidden="true">
+    <div class="bierka b1" title="oszczep">
+      <svg viewBox="0 0 600 100" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="shaft1" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="currentColor" stop-opacity="0.4"/>
+            <stop offset="50%" stop-color="currentColor" stop-opacity="1"/>
+            <stop offset="100%" stop-color="currentColor" stop-opacity="0.4"/>
+          </linearGradient>
+        </defs>
+        <rect x="20" y="38" width="520" height="22" rx="11" fill="url(#shaft1)"/>
+        <polygon points="540,30 600,50 540,70 555,50" fill="currentColor"/>
+        <line x1="40" y1="50" x2="500" y2="50" stroke="rgba(0,0,0,0.25)" stroke-width="1"/>
+      </svg>
+    </div>
+
+    <div class="bierka b2" title="trójząb">
+      <svg viewBox="0 0 600 100" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="shaft2" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="currentColor" stop-opacity="0.4"/>
+            <stop offset="50%" stop-color="currentColor" stop-opacity="1"/>
+            <stop offset="100%" stop-color="currentColor" stop-opacity="0.4"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="40" width="500" height="20" rx="10" fill="url(#shaft2)"/>
+        <path d="M 500 30 L 540 10 L 545 18 L 520 38 L 560 25 L 565 35 L 530 50 L 565 65 L 560 75 L 520 62 L 545 82 L 540 90 L 500 70 Z" fill="currentColor"/>
+      </svg>
+    </div>
+
+    <div class="bierka b3" title="harpun">
+      <svg viewBox="0 0 600 100" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="shaft3" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="currentColor" stop-opacity="0.4"/>
+            <stop offset="50%" stop-color="currentColor" stop-opacity="1"/>
+            <stop offset="100%" stop-color="currentColor" stop-opacity="0.4"/>
+          </linearGradient>
+        </defs>
+        <rect x="20" y="42" width="500" height="16" rx="8" fill="url(#shaft3)"/>
+        <polygon points="520,28 595,50 520,72 540,60 470,55 470,45 540,40" fill="currentColor"/>
+        <polygon points="500,38 480,28 472,38" fill="currentColor"/>
+        <polygon points="500,62 480,72 472,62" fill="currentColor"/>
+      </svg>
+    </div>
+
+    <div class="bierka b4" title="wiosło">
+      <svg viewBox="0 0 600 100" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="shaft4" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="currentColor" stop-opacity="0.4"/>
+            <stop offset="50%" stop-color="currentColor" stop-opacity="1"/>
+            <stop offset="100%" stop-color="currentColor" stop-opacity="0.4"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="42" width="420" height="16" rx="8" fill="url(#shaft4)"/>
+        <ellipse cx="500" cy="50" rx="100" ry="38" fill="currentColor"/>
+        <ellipse cx="500" cy="50" rx="80" ry="28" fill="rgba(0,0,0,0.18)"/>
+      </svg>
+    </div>
+
+    <div class="bierka b5" title="bosak">
+      <svg viewBox="0 0 600 100" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="shaft5" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="currentColor" stop-opacity="0.4"/>
+            <stop offset="50%" stop-color="currentColor" stop-opacity="1"/>
+            <stop offset="100%" stop-color="currentColor" stop-opacity="0.4"/>
+          </linearGradient>
+        </defs>
+        <rect x="0" y="42" width="500" height="16" rx="8" fill="url(#shaft5)"/>
+        <path d="M 500 50 Q 560 50 575 25 Q 590 0 565 -10" fill="none" stroke="currentColor" stroke-width="14" stroke-linecap="round"/>
+        <polygon points="565,-10 555,2 575,-2" fill="currentColor"/>
+      </svg>
+    </div>
+  </div>
+
   <main>
     <section class="alfa-board" id="alfaBoard">
       <form id="alfaForm" autocomplete="off">
@@ -24,7 +101,7 @@
           max="9999"
           maxlength="4"
           placeholder="— — — —"
-          aria-label="Czterocyfrowa waga"
+          aria-label="Czterocyfrowy kod"
         >
         <button type="submit" class="alfa-check-btn">Sprawdź</button>
         <div class="alfa-feedback" id="alfaFeedback" aria-live="polite"></div>
@@ -32,10 +109,15 @@
 
       <section class="alfa-reveal" id="alfaReveal" aria-live="polite">
         <h2 class="alfa-reveal-title">WASZA CYFRA TO…</h2>
-        <div class="alfa-reveal-cipher">5</div>
+        <div class="alfa-reveal-cipher" id="alfaCipher"></div>
+        <p class="alfa-hint">
+          Zawołajcie informatyków i przytulcie ich czule,<br>
+          Następnie powiedzcie że kolejność cyfr do zamka jest zawarta w tytule.
+        </p>
       </section>
     </section>
   </main>
+  <script src="/js/global.js"></script>
   <script src="/js/alfa.js"></script>
 </body>
 </html>
