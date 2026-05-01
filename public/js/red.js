@@ -112,7 +112,7 @@
         }
       }, 700);
     } else {
-      showFeedback('To nie ta bajka — spróbujcie jeszcze raz.', 'error');
+      showFeedback('To nie ta bajka - spróbujcie jeszcze raz.', 'error');
       shake(input);
     }
   });

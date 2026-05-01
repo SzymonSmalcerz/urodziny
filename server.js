@@ -7,11 +7,42 @@ const PORT = process.env.PORT || 3000;
 const AUDIO_DIR = path.join(__dirname, 'public', 'audio');
 const VIEWS_DIR = path.join(__dirname, 'views');
 
-app.use((req, res, next) => {
-  if (req.path.startsWith('/audio/')) {
-    res.setHeader('Cache-Control', 'public, max-age=86400');
+const SONGS_BY_NFC = new Map();
+
+function refreshSongs() {
+  SONGS_BY_NFC.clear();
+  let files = [];
+  try {
+    files = fs.readdirSync(AUDIO_DIR);
+  } catch (_) {
+    return [];
   }
-  next();
+  const nfcStems = [];
+  files
+    .filter((f) => f.toLowerCase().endsWith('.mp3'))
+    .forEach((actual) => {
+      const stem = actual.slice(0, -4);
+      const nfc = stem.normalize('NFC');
+      SONGS_BY_NFC.set(nfc, actual);
+      nfcStems.push(nfc);
+    });
+  return nfcStems;
+}
+
+refreshSongs();
+
+app.get('/audio/:name', (req, res) => {
+  const requested = decodeURIComponent(req.params.name);
+  if (!requested.toLowerCase().endsWith('.mp3')) {
+    return res.status(404).end();
+  }
+  const stem = requested.slice(0, -4).normalize('NFC');
+  const actual = SONGS_BY_NFC.get(stem);
+  if (!actual) {
+    return res.status(404).end();
+  }
+  res.setHeader('Cache-Control', 'public, max-age=86400');
+  res.sendFile(path.join(AUDIO_DIR, actual));
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -51,27 +82,20 @@ app.get('/api/answer', (req, res) => {
   if (song.includes('/') || song.includes('\\') || song.includes('..')) {
     return res.status(400).json({ error: 'invalid_song_param' });
   }
-  const filePath = path.join(AUDIO_DIR, `${song}.mp3`);
-  fs.access(filePath, fs.constants.R_OK, (err) => {
-    if (err) return res.status(404).json({ error: 'song_not_found', song });
-    res.json({ correct: song });
-  });
+  const nfc = song.normalize('NFC');
+  if (!SONGS_BY_NFC.has(nfc)) {
+    return res.status(404).json({ error: 'song_not_found', song });
+  }
+  res.json({ correct: nfc });
 });
 
 app.get('/api/songs', (req, res) => {
-  fs.readdir(AUDIO_DIR, (err, files) => {
-    if (err) {
-      return res.status(500).json({ error: 'audio_dir_unavailable', songs: [] });
-    }
-    const songs = files
-      .filter((f) => f.toLowerCase().endsWith('.mp3'))
-      .map((f) => f.slice(0, -4));
-    for (let i = songs.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [songs[i], songs[j]] = [songs[j], songs[i]];
-    }
-    res.json({ songs });
-  });
+  const songs = refreshSongs();
+  for (let i = songs.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [songs[i], songs[j]] = [songs[j], songs[i]];
+  }
+  res.json({ songs });
 });
 
 app.use((req, res) => {
@@ -79,5 +103,5 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`AKTA SPRAWY №30 — serwer detektywistyczny słucha na porcie ${PORT}`);
+  console.log(`AKTA SPRAWY №30 - serwer detektywistyczny słucha na porcie ${PORT}`);
 });

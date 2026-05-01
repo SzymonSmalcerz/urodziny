@@ -1,4 +1,4 @@
-# Akta Sprawy №30 — Escape Room na 30. urodziny Kasi
+# Akta Sprawy №30 - Escape Room na 30. urodziny Kasi
 
 Mała detektywistyczna gra na 4 grupy. Każda grupa ma osobną podstronę i mini-zadanie. Cyfry łączą się w kod do FIZYCZNEJ kłódki.
 
@@ -44,7 +44,7 @@ Po każdym restarcie serwera kolejność piosenek jest losowana.
    - **Build Command**: `npm install`
    - **Start Command**: `npm start`
    - **Plan**: Free
-4. Render sam wystawi `PORT` w env — server.js już to obsługuje.
+4. Render sam wystawi `PORT` w env - server.js już to obsługuje.
 5. Dodaj custom domain w panelu Render (opcjonalnie).
 
 ## Deploy na Digital Ocean (lub własny VPS po SSH)
@@ -81,7 +81,7 @@ kasia_urodziny/
 ## Strategia gry (dla autora)
 
 - Grupy siedzą razem, ale każda widzi tylko swoją podstronę.
-- **Zielona** dostaje hint „w dwóch sprawach waga jest rozwiązaniem" — mówi niebieskiej i kolorowej, że ich zadania polegają na ważeniu.
+- **Zielona** dostaje hint „w dwóch sprawach waga jest rozwiązaniem" - mówi niebieskiej i kolorowej, że ich zadania polegają na ważeniu.
 - **Niebieska** rozplątuje fizyczne kółko, waży, wpisuje wagę online → dostaje cyfrę 6 (akceptowany margines 408–432 g).
 - **Kolorowa** sumuje fizyczne wagi przedmiotów (~215 g) → dostaje cyfrę 1 (akceptowany margines 205–225 g) i wskazówkę o kolejności.
 - Kolejność cyfr w kłódce ukryta w tytułach podstron (HTML `<title>`): `red`, `green`, `blue`, `alfa` → R-G-B-A.
